@@ -9,7 +9,7 @@ const generateToken =
 const fs = require("fs");
 
 const uploadToBunny =
-    require("../config/bunnyConfig");    
+    require("../config/bunnyConfig");
 
 
 
@@ -238,7 +238,7 @@ exports.studentLogin =
 
         }
 
-    };    
+    };
 
 /* ==================================
    TEACHER SIGNUP
@@ -700,7 +700,7 @@ exports.adminLogin =
 
         }
 
-    };    
+    };
 
 exports.changePassword =
     async (req, res) => {
@@ -767,5 +767,3 @@ exports.changePassword =
         }
 
     };
-    
-    
