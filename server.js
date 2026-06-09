@@ -115,6 +115,11 @@ const admissionRoutes =
     require(
         "./routes/admissionRoutes"
     );    
+ 
+const liveClassRoutes =
+    require(
+        "./routes/liveClassRoutes"
+    );    
 
 connectDB();
 
@@ -156,6 +161,11 @@ app.use(
 app.use(
     "/api/admissions",
     admissionRoutes
+);
+
+app.use(
+    "/api/live-classes",
+    liveClassRoutes
 );
 
 app.get("/", (req, res) => {
