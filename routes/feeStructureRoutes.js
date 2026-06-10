@@ -15,7 +15,7 @@ const {
 
     getFeeStructure,
 
-    getStudentFee,
+    getFeeByClass,
 
     updateFeeStructure,
 
@@ -38,9 +38,9 @@ router.get(
 );
 
 router.get(
-    "/student/:studentId",
+    "/class/:classId",
     auth,
-    getStudentFee
+    getFeeByClass
 );
 
 router.get(

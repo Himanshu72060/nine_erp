@@ -17,6 +17,22 @@ const feeItemSchema =
         dueDate: {
             type: String,
             required: true
+        }
+
+    });
+
+const feeStructureSchema =
+    new mongoose.Schema({
+
+        classId: {
+            type: String,
+            required: true,
+            unique: true
+        },
+
+        className: {
+            type: String,
+            required: true
         },
 
         frequency: {
@@ -39,21 +55,6 @@ const feeItemSchema =
 
             required: true
 
-        }
-
-    });
-
-const feeStructureSchema =
-    new mongoose.Schema({
-
-        studentId: {
-            type: String,
-            required: true
-        },
-
-        classId: {
-            type: String,
-            required: true
         },
 
         totalAmount: {
@@ -78,7 +79,6 @@ const feeStructureSchema =
         }
 
     },
-
         {
             timestamps: true
         }

@@ -11,6 +11,27 @@ exports.createFeeStructure =
 
         try {
 
+            const existing =
+                await FeeStructure.findOne({
+
+                    classId:
+                        req.body.classId
+
+                });
+
+            if (existing) {
+
+                return res.status(400).json({
+
+                    success: false,
+
+                    message:
+                        "Class Fee Structure Already Exists"
+
+                });
+
+            }
+
             const fee =
                 await FeeStructure.create(
                     req.body
@@ -23,7 +44,8 @@ exports.createFeeStructure =
                 message:
                     "Fee Structure Created",
 
-                data: fee
+                data:
+                    fee
 
             });
 
@@ -41,6 +63,7 @@ exports.createFeeStructure =
         }
 
     };
+
 
 
 // GET ALL
@@ -81,7 +104,8 @@ exports.getFeeStructures =
     };
 
 
-// GET SINGLE
+
+// GET SINGLE CLASS
 
 exports.getFeeStructure =
     async (req, res) => {
@@ -110,7 +134,8 @@ exports.getFeeStructure =
 
                 success: true,
 
-                data: fee
+                data:
+                    fee
 
             });
 
@@ -130,9 +155,10 @@ exports.getFeeStructure =
     };
 
 
-// STUDENT FEE
 
-exports.getStudentFee =
+// GET BY CLASS ID
+
+exports.getFeeByClass =
     async (req, res) => {
 
         try {
@@ -140,8 +166,8 @@ exports.getStudentFee =
             const fee =
                 await FeeStructure.findOne({
 
-                    studentId:
-                        req.params.studentId
+                    classId:
+                        req.params.classId
 
                 });
 
@@ -152,7 +178,7 @@ exports.getStudentFee =
                     success: false,
 
                     message:
-                        "Fee Record Not Found"
+                        "Class Fee Structure Not Found"
 
                 });
 
@@ -181,6 +207,7 @@ exports.getStudentFee =
         }
 
     };
+
 
 
 // UPDATE
@@ -242,6 +269,8 @@ exports.updateFeeStructure =
         }
 
     };
+
+
 
 
 // DELETE
