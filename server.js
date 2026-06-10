@@ -1,100 +1,19 @@
-// const express = require("express");
-// const dotenv = require("dotenv");
-// const cors = require("cors");
+const express =
+    require("express");
 
+const http =
+    require("http");
 
+const { Server } =
+    require("socket.io");
 
-// const connectDB =
-//     require("./config/db");
+const dotenv =
+    require("dotenv");
 
-// const authRoutes =
-//     require("./routes/authRoutes");
+const cors =
+    require("cors");
 
-// const studentRoutes =
-//     require(
-//         "./routes/studentRoutes"
-//     );    
-
-// const teacherRoutes =
-//     require(
-//         "./routes/teacherRoutes"
-//     );
-
-// const adminRoutes =
-//     require(
-//         "./routes/adminRoutes"
-//     );    
-
-// dotenv.config();
-
-// connectDB();
-
-// const app = express();
-
-// app.use(cors());
-
-// app.use(express.json());
-
-// app.use(express.urlencoded({
-//     extended: true
-// }));
-
-// app.use(
-//     "/api/auth",
-//     authRoutes
-// );
-
-// app.use(
-//     "/api/student",
-//     studentRoutes
-// );
-
-// app.use(
-//     "/uploads",
-//     express.static(
-//         "uploads"
-//     )
-// );
-
-// app.use(
-//     "/api/teacher",
-//     teacherRoutes
-// );
-
-// app.use(
-//     "/api/admin",
-//     adminRoutes
-// );
-
-
-
-// app.get("/", (req, res) => {
-
-//     res.json({
-//         success: true,
-//         message:
-//             "School Management API Running"
-//     });
-
-// });
-
-// const PORT =
-//     process.env.PORT || 5000;
-
-// app.listen(PORT, () => {
-
-//     console.log(
-//         `Server Running On Port ${PORT}`
-//     );
-
-// });
-
-
-const dotenv = require("dotenv");
 dotenv.config();
-
-const express = require("express");
-const cors = require("cors");
 
 const connectDB =
     require("./config/db");
@@ -112,37 +31,92 @@ const adminRoutes =
     require("./routes/adminRoutes");
 
 const admissionRoutes =
-    require(
-        "./routes/admissionRoutes"
-    );    
- 
+    require("./routes/admissionRoutes");
+
 const liveClassRoutes =
-    require(
-        "./routes/liveClassRoutes"
-    );    
+    require("./routes/liveClassRoutes");
 
 const feeStructureRoutes =
-    require(
-        "./routes/feeStructureRoutes"
-    );
+    require("./routes/feeStructureRoutes");
 
 const feeReportRoutes =
+    require("./routes/feeReportRoutes");
+
+const chatRoutes =
+    require("./routes/chatRoutes");
+
+const reportCardRoutes =
     require(
-        "./routes/feeReportRoutes"
-    );
-    
+        "./routes/reportCardRoutes"
+    );    
+
+
+// DATABASE
 
 connectDB();
 
-const app = express();
+
+// EXPRESS APP
+
+const app =
+    express();
+
+
+// HTTP SERVER
+
+const server =
+    http.createServer(app);
+
+
+// SOCKET.IO
+
+const io =
+    new Server(server, {
+
+        cors: {
+            origin: "*",
+            methods: [
+                "GET",
+                "POST"
+            ]
+        }
+
+    });
+
+require(
+    "./socket/socket"
+)(io);
+
+
+// MIDDLEWARE
 
 app.use(cors());
 
 app.use(express.json());
 
-app.use(express.urlencoded({
-    extended: true
-}));
+app.use(
+    express.urlencoded({
+        extended: true
+    })
+);
+
+
+// STATIC
+
+app.use(
+    "/uploads",
+    express.static(
+        "uploads"
+    )
+);
+
+
+// ROUTES
+
+app.use(
+    "/api/report-cards",
+    reportCardRoutes
+);
 
 app.use(
     "/api/auth",
@@ -150,23 +124,8 @@ app.use(
 );
 
 app.use(
-    "/api/fee-structures",
-    feeStructureRoutes
-);
-
-app.use(
-    "/api/fee-reports",
-    feeReportRoutes
-);
-
-app.use(
     "/api/student",
     studentRoutes
-);
-
-app.use(
-    "/uploads",
-    express.static("uploads")
 );
 
 app.use(
@@ -189,23 +148,53 @@ app.use(
     liveClassRoutes
 );
 
-app.get("/", (req, res) => {
+app.use(
+    "/api/fee-structures",
+    feeStructureRoutes
+);
 
-    res.json({
-        success: true,
-        message:
-            "School Management API Running"
-    });
+app.use(
+    "/api/fee-reports",
+    feeReportRoutes
+);
 
-});
+app.use(
+    "/api/chat",
+    chatRoutes
+);
+
+
+// HOME ROUTE
+
+app.get(
+    "/",
+    (req, res) => {
+
+        res.json({
+
+            success: true,
+
+            message:
+                "School Management API Running"
+
+        });
+
+    }
+);
+
+
+// START SERVER
 
 const PORT =
     process.env.PORT || 5000;
 
-app.listen(PORT, () => {
+server.listen(
+    PORT,
+    () => {
 
-    console.log(
-        `Server Running On Port ${PORT}`
-    );
+        console.log(
+            `Server Running On Port ${PORT}`
+        );
 
-});
+    }
+);
