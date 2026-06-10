@@ -21,7 +21,7 @@ exports.createFeeStructure =
                 success: true,
 
                 message:
-                    "Fee Structure Created Successfully",
+                    "Fee Structure Created",
 
                 data: fee
 
@@ -51,10 +51,7 @@ exports.getFeeStructures =
         try {
 
             const fees =
-                await FeeStructure.find()
-                    .sort({
-                        createdAt: -1
-                    });
+                await FeeStructure.find();
 
             res.status(200).json({
 
@@ -63,7 +60,8 @@ exports.getFeeStructures =
                 count:
                     fees.length,
 
-                data: fees
+                data:
+                    fees
 
             });
 
@@ -132,6 +130,59 @@ exports.getFeeStructure =
     };
 
 
+// STUDENT FEE
+
+exports.getStudentFee =
+    async (req, res) => {
+
+        try {
+
+            const fee =
+                await FeeStructure.findOne({
+
+                    studentId:
+                        req.params.studentId
+
+                });
+
+            if (!fee) {
+
+                return res.status(404).json({
+
+                    success: false,
+
+                    message:
+                        "Fee Record Not Found"
+
+                });
+
+            }
+
+            res.status(200).json({
+
+                success: true,
+
+                data:
+                    fee
+
+            });
+
+        } catch (error) {
+
+            res.status(500).json({
+
+                success: false,
+
+                message:
+                    error.message
+
+            });
+
+        }
+
+    };
+
+
 // UPDATE
 
 exports.updateFeeStructure =
@@ -170,9 +221,10 @@ exports.updateFeeStructure =
                 success: true,
 
                 message:
-                    "Fee Structure Updated Successfully",
+                    "Fee Structure Updated",
 
-                data: fee
+                data:
+                    fee
 
             });
 
@@ -222,7 +274,7 @@ exports.deleteFeeStructure =
                 success: true,
 
                 message:
-                    "Fee Structure Deleted Successfully"
+                    "Fee Structure Deleted"
 
             });
 
