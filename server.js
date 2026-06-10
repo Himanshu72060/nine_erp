@@ -121,6 +121,17 @@ const liveClassRoutes =
         "./routes/liveClassRoutes"
     );    
 
+const feeStructureRoutes =
+    require(
+        "./routes/feeStructureRoutes"
+    );
+
+const feeReportRoutes =
+    require(
+        "./routes/feeReportRoutes"
+    );
+    
+
 connectDB();
 
 const app = express();
@@ -136,6 +147,16 @@ app.use(express.urlencoded({
 app.use(
     "/api/auth",
     authRoutes
+);
+
+app.use(
+    "/api/fee-structures",
+    feeStructureRoutes
+);
+
+app.use(
+    "/api/fee-reports",
+    feeReportRoutes
 );
 
 app.use(
