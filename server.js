@@ -50,6 +50,12 @@ const reportCardRoutes =
         "./routes/reportCardRoutes"
     );    
 
+const attendanceRoutes =
+    require(
+        "./routes/attendanceRoutes"
+    );
+
+    
 
 // DATABASE
 
@@ -112,6 +118,10 @@ app.use(
 
 
 // ROUTES
+app.use(
+    "/api/attendance",
+    attendanceRoutes
+);
 
 app.use(
     "/api/report-cards",
