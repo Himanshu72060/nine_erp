@@ -55,7 +55,10 @@ const attendanceRoutes =
         "./routes/attendanceRoutes"
     );
 
-    
+const timeTableRoutes =
+    require(
+        "./routes/timeTableRoutes"
+    );    
 
 // DATABASE
 
@@ -118,6 +121,11 @@ app.use(
 
 
 // ROUTES
+app.use(
+    "/api/timetable",
+    timeTableRoutes
+);
+
 app.use(
     "/api/attendance",
     attendanceRoutes
